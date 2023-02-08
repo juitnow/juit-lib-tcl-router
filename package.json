@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "commonjs",
   "description": "Client for Alcatel/TCL routers",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "require": {
@@ -36,5 +36,22 @@
   "devDependencies": {
     "@plugjs/build": "^0.1.0",
     "dotenv": "^16.0.3"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/juitnow/juit-lib-tcl-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juitnow/juit-lib-tcl-router/issues"
+  },
+  "homepage": "https://github.com/juitnow/juit-lib-tcl-router#readme",
+  "files": [
+    "*.md",
+    "dist/",
+    "src/",
+    "tsconfig.json"
+  ]
 }
