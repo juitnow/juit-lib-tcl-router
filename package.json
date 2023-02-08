@@ -31,7 +31,7 @@
     "tcl",
     "typescript"
   ],
-  "author": "Pier Fumagalli <pier@usrz.com>",
+  "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@plugjs/build": "^0.1.0",
