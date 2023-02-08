@@ -1,0 +1,40 @@
+{
+  "name": "@juit/lib-tcl-router",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "description": "Client for Alcatel/TCL routers",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "plug"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "alcatel",
+    "network",
+    "monitoring",
+    "tcl",
+    "typescript"
+  ],
+  "author": "Pier Fumagalli <pier@usrz.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@plugjs/build": "^0.1.0",
+    "dotenv": "^16.0.3"
+  }
+}

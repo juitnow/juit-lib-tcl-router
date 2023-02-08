@@ -1,0 +1,5 @@
+.coverage-data/
+.env
+coverage/
+dist/
+node_modules/
