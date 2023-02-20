@@ -16,7 +16,6 @@ export type AlactelClientVerbs = {
   readonly [ verb in Verbs as Uncapitalize<verb> ]: () => Promise<Record<string, any>>
 }
 
-
 export interface AlcatelClientBasicStatus {
   /* The IMEI of the device              (from `GetSystemInfo -> IMEI`) */
   imei: string,
@@ -224,7 +223,7 @@ export class AlcatelClient {
   }
 
   /** Poll basic status (does **not** require login). */
-  async poll(): Promise<AlcatelClientBasicStatus> {
+  async pollBasic(): Promise<AlcatelClientBasicStatus> {
     const [ systemInfo, systemStatus ] = await Promise.all([
       this.getSystemInfo(),
       this.getSystemStatus(),
@@ -271,6 +270,16 @@ export class AlcatelClient {
       sinr: parseInt(networkInfo['SINR']) || Infinity,
       rsrq: parseInt(networkInfo['RSRQ']) || Infinity,
     }
+  }
+
+  /**
+   * Poll extended status (**does require** login).
+   *
+   * @deprecated Use {@link pollBasic()} or {@link pollExtended}.
+   */
+  /* coverage ignore next */
+  poll(): Promise<AlcatelClientExtendedStatus> {
+    return this.pollExtended()
   }
 }
 
