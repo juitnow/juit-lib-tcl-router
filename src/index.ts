@@ -7,8 +7,8 @@ import {
 } from 'node:crypto'
 import { isIPv4, isIPv6 } from 'node:net'
 
-import { publicVerbs, restrictedVerbs } from './verbs'
 import { CONNECTION_STATUSES, NETWORK_TYPES } from './constants'
+import { publicVerbs, restrictedVerbs } from './verbs'
 
 import type { Verbs } from './verbs'
 
@@ -16,7 +16,8 @@ export type AlactelClientVerbs = {
   readonly [ verb in Verbs as Uncapitalize<verb> ]: () => Promise<Record<string, any>>
 }
 
-export interface AlcatelClientStatus {
+
+export interface AlcatelClientBasicStatus {
   /* The IMEI of the device              (from `GetSystemInfo -> IMEI`) */
   imei: string,
   /* The ICC-ID of the SIM card          (from `GetSystemInfo -> ICCID`) */
@@ -25,6 +26,15 @@ export interface AlcatelClientStatus {
   device: string,
   /* The status of the connection        (from `GetConnectionState -> ConnectionStatus`) */
   connection_status: typeof CONNECTION_STATUSES[keyof typeof CONNECTION_STATUSES] | 'Unknown',
+  /* The network type                    (from `GetNetworkInfo -> NetworkType`) */
+  network_type: typeof NETWORK_TYPES[keyof typeof NETWORK_TYPES] | 'Unknown',
+  /* The network name                    (from `GetNetworkInfo -> NetworkName`) */
+  network_name: string | null,
+  /* The overall network strength (bars) (from `GetNetworkInfo -> SignalStrength`) */
+  strength: number,
+}
+
+export interface AlcatelClientExtendedStatus extends AlcatelClientBasicStatus {
   /* The number of bytes in (downloaded) (from `GetConnectionState -> DlBytes`) */
   bytes_in: number,
   /* The number of bytes out (uploaded)  (from `GetConnectionState -> UlBytes`) */
@@ -37,12 +47,6 @@ export interface AlcatelClientStatus {
   ipv4_addr: string | null,
   /* The current IPv6 address or `null`  (from `GetConnectionState -> IPv6Adrress`) */
   ipv6_addr: string | null,
-  /* The network name                    (from `GetNetworkInfo -> NetworkName`) */
-  network_name: string | null,
-  /* The network type                    (from `GetNetworkInfo -> NetworkType`) */
-  network_type: typeof NETWORK_TYPES[keyof typeof NETWORK_TYPES] | 'Unknown',
-  /* The overall network strength (bars) (from `GetNetworkInfo -> SignalStrength`) */
-  strength: number,
   /* Received Signal Strength Indicator  (from `GetNetworkInfo -> RSSI`) */
   rssi: number,
   /* Reference Signal Received Power     (from `GetNetworkInfo -> RSRQ`) */
@@ -57,7 +61,7 @@ export interface AlcatelClient extends AlactelClientVerbs {
   login(): Promise<void>
   connect(): Promise<void>
   disconnect(): Promise<void>
-  poll(): Promise<AlcatelClientStatus>
+  pollExtended(): Promise<AlcatelClientExtendedStatus>
 }
 
 export interface AlcatelClientOptions {
@@ -89,7 +93,7 @@ export class AlcatelClient {
   private __sequence: number = 1
   private __token: string | undefined
 
-  constructor(hostName: string, password: string, options: AlcatelClientOptions = {}) {
+  constructor(hostName: string, password: string = '', options: AlcatelClientOptions = {}) {
     const {
       userName = 'admin',
       publicEncryptionKey = 'EE5GRouter2020',
@@ -219,7 +223,28 @@ export class AlcatelClient {
     this.__token = result.token
   }
 
-  async poll(): Promise<AlcatelClientStatus> {
+  /** Poll basic status (does **not** require login). */
+  async poll(): Promise<AlcatelClientBasicStatus> {
+    const [ systemInfo, systemStatus ] = await Promise.all([
+      this.getSystemInfo(),
+      this.getSystemStatus(),
+    ])
+
+    return {
+      imei: systemInfo['IMEI'] || '',
+      iccid: systemInfo['ICCID'] || '',
+      device: systemInfo['DeviceName'] || '',
+
+      connection_status: (<any> CONNECTION_STATUSES)[systemStatus['ConnectionStatus']] || 'Unknown',
+      network_type: (<any> NETWORK_TYPES)[systemStatus['NetworkType']] || 'Unknown',
+
+      network_name: systemStatus['NetworkName'] || null,
+      strength: systemStatus['SignalStrength'] || 0,
+    }
+  }
+
+  /** Poll extended status (**does require** login). */
+  async pollExtended(): Promise<AlcatelClientExtendedStatus> {
     const systemInfo = await this.getSystemInfo()
     const networkInfo = await this.getNetworkInfo()
     const connectionState = await this.getConnectionState()
