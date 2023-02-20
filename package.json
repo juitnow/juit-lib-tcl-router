@@ -1,6 +1,6 @@
 {
   "name": "@juit/lib-tcl-router",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "commonjs",
   "description": "Client for Alcatel/TCL routers",
   "main": "./dist/index.cjs",
