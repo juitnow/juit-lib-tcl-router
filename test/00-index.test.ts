@@ -110,6 +110,7 @@ describe('Alcatel Client', () => {
    * POLL                                                                     *
    * ======================================================================== */
   _it('should poll a basic status', async () => {
+    const client = new AlcatelClient(host || '') // without password!
     log.notice(await client.pollBasic())
   })
 
