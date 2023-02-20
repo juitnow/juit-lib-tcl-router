@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv'
 import { log } from '@plugjs/plug'
+import * as dotenv from 'dotenv'
 
 import { AlcatelClient } from '../src/index'
 import { publicVerbs, restrictedVerbs } from '../src/verbs'
@@ -109,7 +109,11 @@ describe('Alcatel Client', () => {
   /* ======================================================================== *
    * POLL                                                                     *
    * ======================================================================== */
-  _it('should poll for some information that makes sense', async () => {
-    log.notice(await client.poll())
+  _it('should poll a basic status', async () => {
+    log.notice(await client.pollBasic())
+  })
+
+  _it('should poll an extended status', async () => {
+    log.notice(await client.pollExtended())
   })
 })
