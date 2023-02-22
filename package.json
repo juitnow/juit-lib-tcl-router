@@ -19,7 +19,12 @@
     }
   },
   "scripts": {
-    "build": "plug"
+    "build": "plug",
+    "coverage": "plug coverage",
+    "dev": "plug coverage -w src -w test",
+    "lint": "plug lint",
+    "test": "plug test",
+    "transpile": "plug transpile"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -34,7 +39,7 @@
   "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@plugjs/build": "^0.1.0",
+    "@plugjs/build": "^0.2.0",
     "dotenv": "^16.0.3"
   },
   "directories": {
