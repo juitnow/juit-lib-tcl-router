@@ -39,7 +39,7 @@
   "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@plugjs/build": "^0.2.1",
+    "@plugjs/build": "^0.2.4",
     "dotenv": "^16.0.3"
   },
   "directories": {
