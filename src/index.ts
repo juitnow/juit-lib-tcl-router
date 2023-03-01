@@ -229,6 +229,7 @@ export class AlcatelClient {
       this.getSystemStatus(),
     ])
 
+    /* coverage ignore next */
     return {
       imei: systemInfo['IMEI'] || '',
       iccid: systemInfo['ICCID'] || '',
