@@ -2,10 +2,9 @@ import { tasks } from '@plugjs/build'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
-const enableCoverage = !! process.env.ALCATEL_HOST
+const coverageLevel = process.env.ALCATEL_HOST ? 100 : 0
 
 export default tasks({
-  coverage: enableCoverage,
-  minimumCoverage: enableCoverage ? 100 : 0,
-  minimumFileCoverage: enableCoverage ? 100 : 0,
+  minimumCoverage: coverageLevel,
+  minimumFileCoverage: coverageLevel,
 })
