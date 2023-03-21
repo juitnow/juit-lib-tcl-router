@@ -126,7 +126,7 @@ export class AlcatelClient {
 
     // Inject all the public verbs right now (those are easy)
     for (const verb of publicVerbs) {
-      const name = verb[0].toLowerCase() + verb.substring(1)
+      const name = verb[0]!.toLowerCase() + verb.substring(1)
       Object.defineProperty(this, name, {
         value: () => this._post(verb, this._publicEncryptionKey, {}),
       })
@@ -134,7 +134,7 @@ export class AlcatelClient {
 
     // Inject all the restricted verbs, retrying call on 401 (token failure)
     for (const verb of [ ...restrictedVerbs, 'connect', 'disconnect' ]) {
-      const name = verb[0].toLowerCase() + verb.substring(1)
+      const name = verb[0]!.toLowerCase() + verb.substring(1)
       Object.defineProperty(this, name, { value: async () => {
         try {
           if (! this.__token) await this.login()

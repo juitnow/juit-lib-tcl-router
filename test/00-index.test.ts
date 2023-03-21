@@ -45,7 +45,7 @@ describe('Alcatel Client', () => {
 
   _describe('Public Verbs', () => {
     for (const verb of publicVerbs) {
-      const method: keyof AlcatelClient = (verb[0].toLowerCase() + verb.substring(1)) as any
+      const method: keyof AlcatelClient = (verb[0]!.toLowerCase() + verb.substring(1)) as any
 
       it(`should request "${verb}"`, async () => {
         const response = await client[method]()
@@ -97,7 +97,7 @@ describe('Alcatel Client', () => {
 
   _describe('Private Verbs', () => {
     for (const verb of restrictedVerbs) {
-      const method: keyof AlcatelClient = (verb[0].toLowerCase() + verb.substring(1)) as any
+      const method: keyof AlcatelClient = (verb[0]!.toLowerCase() + verb.substring(1)) as any
 
       it(`should request "${verb}"`, async () => {
         const response = await client[method]()
