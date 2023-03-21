@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "lib": [ "es2022", "webworker" ],
-    "target": "es2022",
-    "module": "es2022",
-    "moduleResolution": "node16",
+    "lib": [ "esnext", "webworker" ],
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "types": [ "node" ],
     "esModuleInterop": true,
 
@@ -13,6 +13,8 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
   },
   "include": [
     "./src",
