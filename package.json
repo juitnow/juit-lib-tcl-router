@@ -1,6 +1,6 @@
 {
   "name": "@juit/lib-tcl-router",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "description": "Client for Alcatel/TCL routers",
   "main": "./dist/index.cjs",
@@ -39,7 +39,7 @@
   "author": "Juit Developers <developers@juit.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@plugjs/build": "^0.4.0",
+    "@plugjs/build": "^0.4.6",
     "dotenv": "^16.0.3"
   },
   "directories": {
